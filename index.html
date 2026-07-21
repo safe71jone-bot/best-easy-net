@@ -803,7 +803,7 @@ tr:hover td { background: #f4f7ff; }
 .chat-status { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px rgba(76,255,136,0.5); }
 .chat-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #f4f7ff; }
 .chat-input-row { display: flex; gap: 8px; padding: 11px 14px; border-top: 1px solid var(--gray-200); background: var(--white); }
-.chat-input { flex: 1; padding: 9px 14px; border: 1.5px solid var(--gray-200); border-radius: 22px; font-size: 13px; font-family: inherit; outline: none; transition: var(--transition); }
+.chat-input { flex: 1; padding: 9px 14px; border: 1.5px solid var(--gray-200); border-radius: 22px; font-size: 13px; font-family: inherit; outline: none; transition: var(--transition); background: var(--off-white); color: var(--gray-800); }
 .chat-input:focus { border-color: var(--primary-mid); }
 .chat-send-btn { padding: 8px 18px; background: var(--primary); color: #fff; border: none; border-radius: 22px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: var(--transition); }
 .chat-send-btn:hover { background: var(--primary-mid); }
@@ -812,6 +812,19 @@ tr:hover td { background: #f4f7ff; }
 .msg-theirs { background: var(--white); color: var(--gray-800); border: 1px solid var(--gray-200); align-self: flex-start; border-bottom-left-radius: 4px; }
 .msg-time { font-size: 9px; opacity: 0.5; margin-top: 4px; text-align: right; }
 .msg-theirs .msg-time { text-align: left; }
+.msg-text { white-space: pre-wrap; word-break: break-word; }
+.msg-tick { margin-left: 5px; font-size: 10px; opacity: 0.7; letter-spacing: -1px; }
+.msg-tick.seen { color: #93f0c7; opacity: 1; }
+.chat-date-divider { display: flex; align-items: center; justify-content: center; margin: 6px 0 2px; }
+.chat-date-divider span { background: var(--gray-100); color: var(--gray-600); font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+.chat-search-wrap { padding: 9px 12px; border-bottom: 1px solid var(--gray-200); background: var(--white); }
+.chat-search-input { width: 100%; padding: 7px 12px; border: 1.5px solid var(--gray-200); border-radius: 18px; font-size: 11.5px; font-family: inherit; outline: none; transition: var(--transition); background: var(--off-white); color: var(--gray-800); }
+.chat-search-input:focus { border-color: var(--primary-mid); }
+.chat-user-item { position: relative; }
+/* NAV CHAT UNREAD BADGES */
+.nav-chat-badge { background: var(--red); color: #fff; font-size: 9px; font-weight: 800; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; margin-left: 2px; animation: badge-pulse 2s ease-in-out infinite; }
+.bn-item { position: relative; }
+.bn-chat-badge { position: absolute; top: 1px; left: 50%; margin-left: 5px; background: var(--red); color: #fff; font-size: 8.5px; font-weight: 800; min-width: 14px; height: 14px; padding: 0 3px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--white); animation: badge-pulse 2s ease-in-out infinite; }
 
 /* ADMIN DASHBOARD */
 .admin-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px,1fr)); gap: 13px; margin-bottom: 18px; }
@@ -876,7 +889,7 @@ tr:hover td { background: #f4f7ff; }
 
 /* FAB */
 .fab {
-  position: fixed; bottom: 96px; right: 26px; z-index: 150;
+  position: fixed; bottom: 26px; right: 26px; z-index: 150;
   width: 54px; height: 54px; border-radius: 50%;
   background: linear-gradient(135deg, var(--red), var(--red-dark));
   color: #fff; display: flex; align-items: center; justify-content: center;
@@ -998,80 +1011,6 @@ tr:hover td { background: #f4f7ff; }
 }
 .back-to-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-/* =============== FLOATING AI-STYLE SUPPORT CHAT WIDGET =============== */
-.ai-chat-widget { position: fixed; bottom: 26px; right: 26px; z-index: 400; font-family: var(--font-bn); }
-.ai-chat-toggle {
-  width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
-  background: linear-gradient(135deg, var(--primary-light), var(--primary));
-  color: #fff; font-size: 1.6rem; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 10px 34px rgba(21,128,61,0.45); position: relative; transition: var(--transition);
-  animation: aiPulse 2.6s infinite; float: right;
-}
-.ai-chat-toggle:hover { transform: scale(1.08); }
-.ai-chat-widget.open .ai-chat-toggle { animation: none; }
-@keyframes aiPulse { 0%,100%{ box-shadow: 0 10px 34px rgba(21,128,61,0.45); } 50%{ box-shadow: 0 10px 34px rgba(21,128,61,0.45), 0 0 0 10px rgba(34,197,94,0.14); } }
-.ai-chat-badge {
-  position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; padding: 0 5px;
-  border-radius: 10px; background: var(--red); color: #fff; font-size: 10.5px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #fff;
-}
-body.dark-mode .ai-chat-badge { box-shadow: 0 0 0 2px var(--white); }
-.ai-chat-panel {
-  position: absolute; bottom: 74px; right: 0; width: 366px; max-width: 92vw; height: 530px; max-height: 74vh;
-  background: var(--white); border-radius: 20px; box-shadow: var(--shadow-xl);
-  display: flex; flex-direction: column; overflow: hidden;
-  opacity: 0; transform: translateY(16px) scale(0.96); pointer-events: none;
-  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.4,0,0.2,1);
-  border: 1px solid var(--glass-border);
-}
-.ai-chat-widget.open .ai-chat-panel { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
-.ai-chat-widget.minimized .ai-chat-panel { height: 60px; }
-.ai-chat-widget.minimized .ai-chat-body, .ai-chat-widget.minimized .ai-chat-input-row,
-.ai-chat-widget.minimized .ai-chat-quickreplies, .ai-chat-widget.minimized .ai-chat-typing,
-.ai-chat-widget.minimized .ai-emoji-picker { display: none; }
-.ai-chat-header { background: linear-gradient(135deg, var(--primary), var(--primary-mid)); padding: 13px 15px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.ai-chat-header-info { display: flex; align-items: center; gap: 10px; }
-.ai-chat-avatar { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-size: 18px; position: relative; flex-shrink: 0; }
-.ai-chat-online-dot { position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px; border-radius: 50%; background: #34d399; border: 2px solid var(--primary); }
-.ai-chat-title { font-size: 13.5px; font-weight: 800; color: #fff; }
-.ai-chat-subtitle { font-size: 10.5px; color: rgba(255,255,255,0.85); }
-.ai-chat-header-actions { display: flex; gap: 4px; }
-.ai-chat-icon-btn { width: 27px; height: 27px; border-radius: 50%; border: none; background: rgba(255,255,255,0.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: var(--transition); flex-shrink: 0; }
-.ai-chat-icon-btn:hover { background: rgba(255,255,255,0.28); }
-.ai-chat-body { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: var(--off-white); }
-.ai-msg-row { display: flex; flex-direction: column; max-width: 82%; gap: 3px; }
-.ai-msg-row.mine { align-self: flex-end; align-items: flex-end; }
-.ai-msg-row.theirs { align-self: flex-start; align-items: flex-start; }
-.ai-msg-bubble { padding: 9px 13px; border-radius: 16px; font-size: 12.5px; line-height: 1.55; word-break: break-word; box-shadow: var(--shadow-sm); }
-.ai-msg-row.mine .ai-msg-bubble { background: linear-gradient(135deg, var(--primary), var(--primary-mid)); color: #fff; border-bottom-right-radius: 4px; }
-.ai-msg-row.theirs .ai-msg-bubble { background: var(--white); color: var(--gray-800); border: 1px solid var(--gray-100); border-bottom-left-radius: 4px; }
-.ai-msg-meta { font-size: 9.5px; color: var(--gray-400); display: flex; gap: 4px; align-items: center; padding: 0 3px; }
-.ai-msg-seen { color: #60a5fa; font-weight: 700; }
-.ai-date-sep { align-self: center; font-size: 10px; color: var(--gray-400); background: var(--gray-100); padding: 3px 11px; border-radius: 10px; margin: 4px 0; }
-.ai-chat-quickreplies { display: flex; gap: 6px; padding: 0 12px 8px; flex-wrap: wrap; flex-shrink: 0; }
-.ai-qr-chip { border: 1.5px solid var(--primary-light); color: var(--primary); background: transparent; padding: 5px 12px; border-radius: 14px; font-size: 10.5px; font-weight: 700; cursor: pointer; font-family: inherit; transition: var(--transition); white-space: nowrap; }
-.ai-qr-chip:hover { background: var(--primary); color: #fff; }
-.ai-chat-typing { display: flex; align-items: center; gap: 6px; padding: 0 16px 6px; font-size: 10.5px; color: var(--gray-400); flex-shrink: 0; }
-.ai-chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-400); display: inline-block; animation: aiTypingDot 1.2s infinite; }
-.ai-chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-.ai-chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes aiTypingDot { 0%,60%,100%{ transform: translateY(0); opacity: 0.5; } 30%{ transform: translateY(-4px); opacity: 1; } }
-.ai-chat-input-row { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--gray-100); background: var(--white); flex-shrink: 0; }
-.ai-chat-input { flex: 1; border: 1.5px solid var(--gray-200); border-radius: 20px; padding: 9px 14px; font-size: 12.5px; font-family: inherit; outline: none; background: var(--off-white); color: var(--gray-800); transition: var(--transition); min-width: 0; }
-.ai-chat-input:focus { border-color: var(--primary-mid); }
-.ai-chat-send-btn { width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--primary); color: #fff; cursor: pointer; font-size: 14px; flex-shrink: 0; transition: var(--transition); }
-.ai-chat-send-btn:hover { background: var(--primary-mid); transform: scale(1.06); }
-.ai-emoji-picker { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; padding: 8px 10px; border-top: 1px solid var(--gray-100); background: var(--white); flex-shrink: 0; }
-.ai-emoji-picker span { cursor: pointer; font-size: 17px; text-align: center; padding: 3px; border-radius: 6px; }
-.ai-emoji-picker span:hover { background: var(--gray-50); }
-body.dark-mode .ai-msg-row.theirs .ai-msg-bubble { background: var(--gray-50); border-color: var(--gray-200); }
-body.dark-mode .ai-date-sep { background: var(--gray-100); }
-body.dark-mode .ai-chat-input { background: var(--gray-50); }
-@media (max-width: 760px) {
-  .ai-chat-widget { bottom: calc(78px + var(--safe-b)); right: 16px; }
-  .ai-chat-panel { width: calc(100vw - 32px); height: 68vh; bottom: 70px; }
-}
-
 /* =============== MINI BAR CHART (admin dashboard) =============== */
 .mini-chart { display: flex; flex-direction: column; gap: 11px; }
 .mini-chart-row { display: grid; grid-template-columns: 92px 1fr 40px; align-items: center; gap: 10px; font-size: 11.5px; }
@@ -1158,7 +1097,7 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
 
 /* =============== PRINT (receipt) =============== */
 @media print {
-  .header, .footer, .bottom-nav, .fab, .contact-fab-cluster, .ai-chat-widget, .back-to-top, .tr-actions, .main-content > *:not(.print-area), .nav-bar, .util-bar, .header-ticker { display: none !important; }
+  .header, .footer, .bottom-nav, .fab, .contact-fab-cluster, .back-to-top, .tr-actions, .main-content > *:not(.print-area), .nav-bar, .util-bar, .header-ticker { display: none !important; }
   body { background: #fff !important; }
   .print-area { display: block !important; box-shadow: none !important; }
 }
@@ -1404,7 +1343,7 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
             </div>
             <div class="user-dropdown-item" onclick="goTab('profile')">👤 আমার প্রোফাইল</div>
             <div class="user-dropdown-item" onclick="goTab('myapps')">📁 আমার আবেদন</div>
-            <div class="user-dropdown-item" onclick="toggleUserMenu();openChatWidget()">💬 সাপোর্ট চ্যাট</div>
+            <div class="user-dropdown-item" onclick="goTab('chat')">💬 সাপোর্ট চ্যাট</div>
             <hr>
             <div class="user-dropdown-item danger" onclick="doLogout()">🚪 লগআউট</div>
           </div>
@@ -1493,7 +1432,7 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
             <div class="sidebar-widget-title">⚡ কুইক লিংক</div>
             <div class="quick-link-item" onclick="goTab('apply')">✍️ নতুন আবেদন / অর্ডার করুন</div>
             <div class="quick-link-item" onclick="goTab('myapps')">📁 আমার আবেদন দেখুন</div>
-            <div class="quick-link-item" onclick="openChatWidget()">💬 লাইভ সাপোর্ট চ্যাট</div>
+            <div class="quick-link-item" onclick="goTab('chat')">💬 লাইভ সাপোর্ট চ্যাট</div>
             <div class="quick-link-item" onclick="goTab('notices')">📢 সকল নোটিশ দেখুন</div>
             <div class="quick-link-item" onclick="goTab('profile')">👤 আমার প্রোফাইল</div>
           </div>
@@ -1604,6 +1543,40 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
           <span style="font-size:11.5px;color:var(--gray-400)">সাম্প্রতিক সম্পন্ন কাজের নমুনা</span>
         </div>
         <div class="demo-gallery-grid" id="demoGalleryGrid"></div>
+      </div>
+    </div>
+
+    <!-- CHAT TAB -->
+    <div class="tab-content" id="tab-chat">
+      <div class="card p-0">
+        <div class="chat-layout">
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">💬 সাপোর্ট চ্যাট</div>
+            <div id="chatSidebarList">
+              <div class="chat-user-item active">
+                <div class="chat-user-av">A</div>
+                <div><div class="chat-user-name">অ্যাডমিন সাপোর্ট</div><div class="chat-user-preview">বার্তা পাঠান...</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-header">
+              <div class="chat-status"></div>
+              <div style="font-size:13px;font-weight:700">অ্যাডমিন সাপোর্ট</div>
+              <div style="font-size:11px;color:var(--green);font-weight:600">● অনলাইন</div>
+            </div>
+            <div class="chat-body" id="chatBody">
+              <div class="msg-bubble msg-theirs">
+                <div>আস্সালামুআলাইকুম! Best & Easy Net Point সাপোর্টে আপনাকে স্বাগতম। কিভাবে সাহায্য করতে পারি?</div>
+                <div class="msg-time">এইমাত্র</div>
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <input class="chat-input" id="chatMsgInput" placeholder="বার্তা লিখুন..." onkeypress="if(event.key==='Enter') sendUserMsg()">
+              <button class="chat-send-btn" onclick="sendUserMsg()">পাঠান ➤</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1770,8 +1743,8 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
         <div class="chat-layout">
           <div class="chat-sidebar">
             <div class="chat-sidebar-header">💬 ব্যবহারকারীদের বার্তা</div>
-            <div style="padding:9px 11px;border-bottom:1px solid var(--gray-200)">
-              <input class="chat-input" style="width:100%;border-radius:10px" placeholder="🔍 নাম বা মোবাইল খুঁজুন..." oninput="filterAdminChatUsers(this.value)">
+            <div class="chat-search-wrap">
+              <input type="text" id="adminChatSearch" class="chat-search-input" placeholder="🔍 নাম বা মোবাইল খুঁজুন" oninput="renderAdminChatList()">
             </div>
             <div id="adminChatList"></div>
           </div>
@@ -1783,9 +1756,8 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
             <div class="chat-body" id="adminChatBody">
               <div style="text-align:center;padding:30px;color:var(--gray-400);font-size:13px">বামে থেকে ব্যবহারকারী নির্বাচন করুন</div>
             </div>
-            <div class="ai-chat-quickreplies" id="adminChatCanned" style="padding:8px 11px 0"></div>
             <div class="chat-input-row">
-              <input class="chat-input" id="adminChatInput" placeholder="বার্তা লিখুন..." onkeypress="if(event.key==='Enter') sendAdminMsg()" oninput="notifyTypingAdmin()">
+              <input class="chat-input" id="adminChatInput" placeholder="বার্তা লিখুন..." onkeypress="if(event.key==='Enter') sendAdminMsg()">
               <button class="chat-send-btn" onclick="sendAdminMsg()">পাঠান ➤</button>
             </div>
           </div>
@@ -1934,7 +1906,7 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
         </div>
         <div class="footer-contact">
           <h4>কুইক লিংক</h4>
-          <p><a onclick="goTab('services')">সকল সেবা</a><br><a onclick="goTab('apply')">অর্ডার করুন</a><br><a onclick="goTab('notices')">নোটিশ</a><br><a onclick="openChatWidget()">সাপোর্ট চ্যাট</a><br><a onclick="goTab('contact')">যোগাযোগ</a></p>
+          <p><a onclick="goTab('services')">সকল সেবা</a><br><a onclick="goTab('apply')">অর্ডার করুন</a><br><a onclick="goTab('notices')">নোটিশ</a><br><a onclick="goTab('chat')">সাপোর্ট চ্যাট</a><br><a onclick="goTab('contact')">যোগাযোগ</a></p>
         </div>
         <div class="footer-contact">
           <h4>যোগাযোগ</h4>
@@ -2043,39 +2015,6 @@ body.dark-mode .ai-chat-input { background: var(--gray-50); }
   </a>
 </div>
 
-<!-- FLOATING AI-STYLE SUPPORT CHAT WIDGET -->
-<div class="ai-chat-widget" id="aiChatWidget">
-  <div class="ai-chat-panel" id="aiChatPanel">
-    <div class="ai-chat-header">
-      <div class="ai-chat-header-info">
-        <div class="ai-chat-avatar">🤖<span class="ai-chat-online-dot"></span></div>
-        <div>
-          <div class="ai-chat-title">BENP সহায়ক</div>
-          <div class="ai-chat-subtitle" id="aiChatSubtitle">অনলাইন আছে · সাধারণত দ্রুত উত্তর দেয়</div>
-        </div>
-      </div>
-      <div class="ai-chat-header-actions">
-        <button class="ai-chat-icon-btn" onclick="toggleChatSound()" id="aiChatSoundBtn" title="শব্দ চালু/বন্ধ">🔔</button>
-        <button class="ai-chat-icon-btn" onclick="minimizeChatWidget()" title="মিনিমাইজ">➖</button>
-        <button class="ai-chat-icon-btn" onclick="closeChatWidget()" title="বন্ধ করুন">✕</button>
-      </div>
-    </div>
-    <div class="ai-chat-body" id="chatBody"></div>
-    <div class="ai-chat-typing hidden" id="aiChatTyping"><span></span><span></span><span></span> লিখছে...</div>
-    <div class="ai-chat-quickreplies" id="aiChatQuickReplies"></div>
-    <div class="ai-emoji-picker hidden" id="aiEmojiPicker"></div>
-    <div class="ai-chat-input-row">
-      <button class="ai-chat-icon-btn" style="color:var(--gray-600);background:var(--gray-100)" onclick="toggleEmojiPicker()" title="ইমোজি">😊</button>
-      <input class="ai-chat-input" id="chatMsgInput" placeholder="বার্তা লিখুন..." onkeypress="if(event.key==='Enter') sendUserMsg()" oninput="notifyTypingUser()">
-      <button class="ai-chat-send-btn" onclick="sendUserMsg()" title="পাঠান">➤</button>
-    </div>
-  </div>
-  <button class="ai-chat-toggle" id="aiChatToggle" onclick="toggleChatWidget()" title="সাপোর্ট সহায়ক">
-    <span id="aiChatToggleIcon">🤖</span>
-    <span class="ai-chat-badge hidden" id="aiChatBadge">0</span>
-  </button>
-</div>
-
 <script>
 const DB_KEY = 'benp_db_v5';
 const SESSION_KEY = 'benp_session_v1';
@@ -2083,7 +2022,7 @@ const JSONBIN_ID = '6a5fdec7da38895dfe7cbc5d';
 const JSONBIN_ACCESS_KEY = '$2a$10$QKvteAwF.gVuumdi0hd44eLH5NWCrPIkKoP1bIq2cBFwz8sfiUynS';
 const JSONBIN_BASE = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
 let db = {
-  users: [], applications: [], notices: [], chats: {}, typing: {}, contactMsgs: [], services: [], notifications: {}, demos: [],
+  users: [], applications: [], notices: [], chats: {}, chatReads: {}, contactMsgs: [], services: [], notifications: {}, demos: [],
   settings: {
     siteName: 'Best & Easy Net Point', tagline: 'ডিজিটাল সেবা পোর্টাল',
     phone: '01775-246863', phone2: '01866-106824',
@@ -2097,10 +2036,10 @@ let db = {
     customCategories: []
   }
 };
-let currentUser = null, adminChatTarget = null, currentApplyStep = 1, applyData = {}, editServiceId = null;
+let currentUser = null, adminChatTarget = null, currentApplyStep = 1, applyData = {}, editServiceId = null, lastChatUnreadCount = 0;
 let adminAppsPage = 1, adminAppsStatusFilter = 'all';
 const APPS_PER_PAGE = 10;
-const GATED_TABS = ['apply','myapps','profile'];
+const GATED_TABS = ['apply','myapps','chat','profile'];
 let pendingGatedTab = null, resetTargetUser = null;
 let cloudSyncTimer = null, cloudSyncing = false, cloudAvailable = true, cloudPollTimer = null, cloudPolling = false;
 
@@ -2167,11 +2106,17 @@ function mergeChats(localChats, remoteChats){
   });
   return merged;
 }
-function mergeTyping(localTyping, remoteTyping){
-  const out = {...(remoteTyping||{}), ...(localTyping||{})};
-  Object.keys(remoteTyping||{}).forEach(k=>{ if((remoteTyping[k]||0) > (out[k]||0)) out[k] = remoteTyping[k]; });
-  return out;
+function mergeChatReads(localReads, remoteReads){
+  localReads = localReads||{}; remoteReads = remoteReads||{};
+  const ids = new Set([...Object.keys(localReads), ...Object.keys(remoteReads)]);
+  const merged = {};
+  ids.forEach(cid=>{
+    const l = localReads[cid]||{}, r = remoteReads[cid]||{};
+    merged[cid] = { user: latestOf(l.user, r.user), admin: latestOf(l.admin, r.admin) };
+  });
+  return merged;
 }
+function latestOf(a,b){ if(!a) return b||null; if(!b) return a; return new Date(a)>new Date(b) ? a : b; }
 function mergeNotifications(localNotifs, remoteNotifs){
   localNotifs = localNotifs||{}; remoteNotifs = remoteNotifs||{};
   const ids = new Set([...Object.keys(localNotifs), ...Object.keys(remoteNotifs)]);
@@ -2192,7 +2137,7 @@ function mergeCloudDB(remote){
   db.demos = mergeById(db.demos, remote.demos);
   db.contactMsgs = mergeById(db.contactMsgs, remote.contactMsgs);
   db.chats = mergeChats(db.chats, remote.chats);
-  db.typing = mergeTyping(db.typing, remote.typing);
+  db.chatReads = mergeChatReads(db.chatReads, remote.chatReads);
   db.notifications = mergeNotifications(db.notifications, remote.notifications);
   db.settings = {...(remote.settings||{}), ...(db.settings||{})};
 }
@@ -2258,14 +2203,13 @@ function setCloudStatus(online){
 function refreshLiveViews(){
   if (currentUser) {
     updateNotifBadge();
+    updateChatNavBadges();
     if (document.getElementById('notifPanel')?.classList.contains('open')) renderNotifPanel();
   }
-  updateChatWidgetBadge();
-  if (document.getElementById('aiChatWidget')?.classList.contains('open')) renderUserChat();
-  if (currentUser?.role==='admin') buildNav();
   const activeEl = document.querySelector('.tab-content.active');
   const activeId = activeEl ? activeEl.id.replace('tab-','') : null;
   if (!activeId || activeId==='admin-settings') return; // avoid clobbering an in-progress settings form
+  if (activeId==='chat') renderUserChat();
   if (activeId==='admin-chat') { renderAdminChatList(); if (adminChatTarget) renderAdminChatBody(); }
   if (activeId==='notices') renderNoticesBoard();
   if (activeId==='admin-notices') renderAdminNotices();
@@ -2363,6 +2307,7 @@ function doRegister() {
   db.users.push(user);
   if(!db.notifications[user.id])db.notifications[user.id]=[];
   db.notifications[user.id].push({id:'n'+Date.now(),title:'স্বাগতম! 🎉',body:`${name}, আপনার অ্যাকাউন্ট তৈরি হয়েছে।`,read:false,date:new Date().toISOString()});
+  addNotifToUser('admin','নতুন সদস্য নিবন্ধন 👤',`${name} (${phone}) নতুন অ্যাকাউন্ট তৈরি করেছেন।`);
   saveDB();
   showAuthMsg(msg,'✅ নিবন্ধন সফল! এখন লগইন করুন।','success');
   setTimeout(()=>switchAuthTab('login'),1800);
@@ -2372,7 +2317,7 @@ function loginUser(user) {
   try{ sessionStorage.setItem(SESSION_KEY, JSON.stringify({id:user.id, role:user.role})); }catch(e){}
   hideAuthPage();
   document.getElementById('appShell').classList.add('show');
-  buildNav(); buildBottomNav(); updateHeaderUser(); initUserData();
+  buildNav(); buildBottomNav(); updateHeaderUser(); initUserData(); updateChatNavBadges();
   if(pendingGatedTab){ const t=pendingGatedTab; pendingGatedTab=null; goTab(t); }
   else if(user.role==='admin') goTab('admin-dashboard'); else goTab('home');
   toast(`স্বাগতম, ${user.name}! 👋`,'success');
@@ -2393,8 +2338,7 @@ function restoreSession(){
   }catch(e){}
 }
 function doLogout() {
-  currentUser=null; adminChatTarget=null; currentApplyStep=1; applyData={}; guestChatLog=[];
-  closeChatWidget(); updateChatWidgetBadge();
+  currentUser=null; adminChatTarget=null; currentApplyStep=1; applyData={};
   try{ sessionStorage.removeItem(SESSION_KEY); }catch(e){}
   buildNav(); buildBottomNav(); updateHeaderUser();
   ['loginPhone','loginPass'].forEach(id=>document.getElementById(id).value='');
@@ -2450,7 +2394,7 @@ function doPasswordReset(){
 }
 
 // ============ NAVIGATION ============
-const USER_TABS=[{id:'home',label:'হোম',icon:'🏠'},{id:'services',label:'সেবাসমূহ',icon:'📋'},{id:'demo',label:'ডেমো',icon:'🖼️'},{id:'apply',label:'আবেদন',icon:'✍️'},{id:'myapps',label:'আমার আবেদন',icon:'📁'},{id:'notices',label:'নোটিশ',icon:'📢'},{id:'profile',label:'প্রোফাইল',icon:'👤'},{id:'contact',label:'যোগাযোগ',icon:'📞'}];
+const USER_TABS=[{id:'home',label:'হোম',icon:'🏠'},{id:'services',label:'সেবাসমূহ',icon:'📋'},{id:'demo',label:'ডেমো',icon:'🖼️'},{id:'apply',label:'আবেদন',icon:'✍️'},{id:'myapps',label:'আমার আবেদন',icon:'📁'},{id:'notices',label:'নোটিশ',icon:'📢'},{id:'chat',label:'সাপোর্ট',icon:'💬'},{id:'profile',label:'প্রোফাইল',icon:'👤'},{id:'contact',label:'যোগাযোগ',icon:'📞'}];
 const ADMIN_TABS=[{id:'admin-dashboard',label:'ড্যাশবোর্ড',icon:'⚡'},{id:'admin-apps',label:'আবেদনসমূহ',icon:'📋'},{id:'admin-users',label:'সদস্যগণ',icon:'👥'},{id:'admin-services',label:'সেবা',icon:'⚙️'},{id:'admin-demo',label:'ডেমো পোস্ট',icon:'🖼️'},{id:'admin-chat',label:'চ্যাট',icon:'💬'},{id:'admin-notices',label:'নোটিশ',icon:'📢'},{id:'admin-contacts',label:'যোগাযোগ',icon:'📞'},{id:'admin-settings',label:'সেটিংস',icon:'🔧'}];
 function buildNav() {
   const tabs=currentUser?.role==='admin'?ADMIN_TABS:USER_TABS;
@@ -2474,12 +2418,8 @@ function buildNav() {
         </div>
       </div>`;
     }
-    if(t.id==='admin-chat'){
-      const n=getAdminChatUnreadTotal();
-      const chatBadge = n>0 ? `<span class="nav-lock" style="background:var(--red);color:#fff;border-radius:9px;padding:1px 6px;opacity:1;font-weight:800">${n>9?'9+':n}</span>` : '';
-      return `<div class="nav-item" id="nav-${t.id}" onclick="goTab('${t.id}')"><span class="nav-icon">${t.icon}</span>${t.label}${chatBadge}</div>`;
-    }
-    return `<div class="nav-item" id="nav-${t.id}" onclick="goTab('${t.id}')"><span class="nav-icon">${t.icon}</span>${t.label}${lockBadge}</div>`;
+    const chatBadge = (t.id==='chat'||t.id==='admin-chat') ? '<span class="nav-chat-badge hidden" id="navChatBadge">0</span>' : '';
+    return `<div class="nav-item" id="nav-${t.id}" onclick="goTab('${t.id}')"><span class="nav-icon">${t.icon}</span>${t.label}${lockBadge}${chatBadge}</div>`;
   }).join('');
 }
 function goServiceCat(cat){ activeServiceCat=cat; goTab('services'); }
@@ -2493,7 +2433,7 @@ function goTab(tabId) {
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   const el=document.getElementById('tab-'+tabId); if(el) el.classList.add('active');
   const nav=document.getElementById('nav-'+tabId); if(nav) nav.classList.add('active');
-  syncBottomNav(tabId==='notices'||tabId==='contact'||tabId==='demo'?'':tabId);
+  syncBottomNav(tabId==='chat'||tabId==='notices'||tabId==='contact'||tabId==='demo'?'':tabId);
   window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
   onTabActivate(tabId);
   const fab=document.getElementById('applyFab');
@@ -2507,6 +2447,7 @@ function onTabActivate(id) {
   if(id==='myapps') renderMyApps();
   if(id==='notices') renderNoticesBoard();
   if(id==='profile') renderProfile();
+  if(id==='chat') renderUserChat();
   if(id==='contact') {}
   if(id==='admin-dashboard') renderAdminDashboard();
   if(id==='admin-apps') renderAdminApps();
@@ -2537,7 +2478,6 @@ function updateHeaderUser() {
   document.getElementById('ddName').textContent=currentUser.name;
   document.getElementById('ddRole').textContent=currentUser.role==='admin'?'অ্যাডমিন':'সদস্য';
   updateNotifBadge();
-  updateChatWidgetBadge();
 }
 function toggleUserMenu() { document.getElementById('userDropdown').classList.toggle('open'); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.user-pill')) document.getElementById('userDropdown')?.classList.remove('open'); });
@@ -2550,7 +2490,7 @@ function renderNotifPanel() {
   const el=document.getElementById('notifPanelBody');
   if(!currentUser){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--gray-400)">নোটিফিকেশন দেখতে লগইন করুন।</div>'; return; }
   const notifs=(db.notifications[currentUser.id]||[]).slice().reverse();
-  el.innerHTML=notifs.length?notifs.map(n=>`<div class="notif-item ${n.read?'':'unread'}" onclick="markNotifRead('${n.id}')"><div class="notif-item-title">${escapeHtml(n.title)}</div><div class="notif-item-body">${escapeHtml(n.body)}</div><div class="notif-item-time">${timeAgo(n.date)}</div></div>`).join(''):'<div style="text-align:center;padding:30px;color:var(--gray-400)">কোনো নোটিফিকেশন নেই।</div>';
+  el.innerHTML=notifs.length?notifs.map(n=>`<div class="notif-item ${n.read?'':'unread'}" onclick="markNotifRead('${n.id}')"><div class="notif-item-title">${n.title}</div><div class="notif-item-body">${n.body}</div><div class="notif-item-time">${timeAgo(n.date)}</div></div>`).join(''):'<div style="text-align:center;padding:30px;color:var(--gray-400)">কোনো নোটিফিকেশন নেই।</div>';
 }
 function markNotifRead(id) { const n=(db.notifications[currentUser.id]||[]).find(n=>n.id===id); if(n){n.read=true;saveDB();updateNotifBadge();renderNotifPanel();} }
 function markAllRead() { (db.notifications[currentUser.id]||[]).forEach(n=>n.read=true); saveDB();updateNotifBadge();renderNotifPanel(); }
@@ -2783,6 +2723,7 @@ function submitApplication() {
   const app={id:'app'+Date.now(),tracking:trackId,userId:currentUser?.id||'guest',userName:applyData.name,phone:applyData.phone,nid:applyData.nid||'',dob:applyData.dob||'',father:applyData.father||'',mother:applyData.mother||'',address:applyData.address||'',note:applyData.note||'',serviceId:s.id,serviceName:s.name,serviceIcon:s.icon,fee:s.fee,payMethod:applyData.payMethod,txn:applyData.txn||'',paymentStatus:applyData.payMethod==='cash'?'unpaid':(applyData.txn?'pending_verify':'unpaid'),status:'pending',date:new Date().toISOString(),timeline:[{status:'pending',label:'আবেদন জমা হয়েছে',date:new Date().toISOString()}],adminNote:''};
   db.applications.push(app);
   if(currentUser) addNotifToUser(currentUser.id,'আবেদন জমা হয়েছে ✅',`"${s.name}" সেবার আবেদন জমা হয়েছে। ট্র্যাকিং: ${trackId}`);
+  addNotifToUser('admin','নতুন আবেদন এসেছে 📋',`${applyData.name} — "${s.name}" সেবার জন্য আবেদন করেছেন। ট্র্যাকিং: ${trackId}`);
   saveDB();
   document.querySelectorAll('.step-content').forEach(el=>el.classList.remove('active'));
   document.getElementById('tab-apply').querySelector('.card').innerHTML=`<div class="tracking-result print-area"><div style="font-size:2.5rem;margin-bottom:10px">🎉</div><div style="font-size:1.2rem;font-weight:900;margin-bottom:6px">আবেদন সফলভাবে জমা হয়েছে!</div><div style="opacity:0.7;font-size:13px">আপনার ট্র্যাকিং নম্বর</div><div class="tracking-code">${trackId}</div><div style="opacity:0.65;font-size:12.5px;margin-bottom:6px">এই নম্বর সংরক্ষণ করুন। এটি দিয়ে আবেদনের অবস্থা জানতে পারবেন।</div><div class="tr-actions"><button onclick="copyTrackId('${trackId}')">📋 কপি করুন</button><button onclick="printReceipt()">🖨️ প্রিন্ট রসিদ</button></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="btn btn-gold" onclick="goTab('myapps')">আমার আবেদন দেখুন →</button><button class="btn btn-ghost" style="border-color:rgba(255,255,255,0.3);color:#fff" onclick="goTab('home')">হোমে ফিরুন</button></div></div>`;
@@ -2851,299 +2792,148 @@ function changeUserPass(){
   toast('পাসওয়ার্ড পরিবর্তন হয়েছে।','success');
 }
 
-// ============ CHAT (floating AI-styled widget + admin console) ============
-function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-const CHAT_FAQS=[
-  {key:'services',label:'📋 সেবার তালিকা'},
-  {key:'fee',label:'💰 ফি ও মূল্য'},
-  {key:'status',label:'📦 আবেদনের অবস্থা'},
-  {key:'hours',label:'🕐 অফিস সময়'},
-  {key:'human',label:'👤 মানুষের সাথে কথা বলুন'}
-];
-let chatSoundOn = (localStorage.getItem('benp_chat_sound')!=='off');
-let guestChatLog = []; // transient (not persisted) messages for logged-out visitors
-let chatTypingHideTimer=null, userTypingSendTimer=null, adminTypingSendTimer=null;
-
-function openChatWidget(){
-  const w=document.getElementById('aiChatWidget'); if(!w) return;
-  w.classList.remove('minimized');
-  w.classList.add('open');
-  renderUserChat(); renderQuickReplies();
-  if(currentUser){ markChatSeen(currentUser.id+'_admin','user'); updateChatWidgetBadge(); }
-  setTimeout(()=>document.getElementById('chatMsgInput')?.focus(),200);
+// ============ CHAT ============
+// -- helpers: unread tracking (per-conversation, per-side last-read timestamps) --
+function unreadCountFor(convId, side){
+  const msgs=db.chats[convId]||[];
+  const otherFrom = side==='user' ? 'admin' : 'user';
+  const readTs=(db.chatReads[convId]||{})[side];
+  if(!readTs) return msgs.filter(m=>m.from===otherFrom).length;
+  return msgs.filter(m=>m.from===otherFrom && new Date(m.date) > new Date(readTs)).length;
 }
-function toggleChatWidget(){
-  const w=document.getElementById('aiChatWidget'); if(!w) return;
-  if(w.classList.contains('open')){ closeChatWidget(); } else { openChatWidget(); }
+function markChatRead(convId, side){
+  if(!db.chatReads[convId]) db.chatReads[convId]={};
+  db.chatReads[convId][side]=new Date().toISOString();
+  saveDB();
 }
-function closeChatWidget(){
-  document.getElementById('aiChatWidget')?.classList.remove('open','minimized');
+function truncateText(str,n){ str=str||''; return str.length>n ? str.slice(0,n)+'…' : str; }
+function chatDateLabel(dateStr){
+  const d=new Date(dateStr), now=new Date();
+  const dOnly=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const nOnly=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const diffDays=Math.round((nOnly-dOnly)/86400000);
+  if(diffDays===0) return 'আজ';
+  if(diffDays===1) return 'গতকাল';
+  return d.toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:d.getFullYear()!==now.getFullYear()?'numeric':undefined});
 }
-function minimizeChatWidget(){
-  document.getElementById('aiChatWidget')?.classList.toggle('minimized');
-}
-function toggleChatSound(){
-  chatSoundOn=!chatSoundOn;
-  localStorage.setItem('benp_chat_sound', chatSoundOn?'on':'off');
-  const btn=document.getElementById('aiChatSoundBtn'); if(btn) btn.textContent=chatSoundOn?'🔔':'🔕';
-  toast(chatSoundOn?'চ্যাট শব্দ চালু হয়েছে।':'চ্যাট শব্দ বন্ধ হয়েছে।','info');
-}
-function playChatSound(){
-  if(!chatSoundOn) return;
-  try{
-    const ctx=new (window.AudioContext||window.webkitAudioContext)();
-    const o=ctx.createOscillator(), g=ctx.createGain();
-    o.type='sine'; o.frequency.value=740; g.gain.value=0.06;
-    o.connect(g); g.connect(ctx.destination); o.start();
-    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.25);
-    o.stop(ctx.currentTime+0.26);
-  }catch(e){}
-}
-function toggleEmojiPicker(){
-  const el=document.getElementById('aiEmojiPicker'); if(!el) return;
-  if(el.classList.contains('hidden')){
-    const emojis=['😊','👍','🙏','❤️','😀','🎉','👌','😢','⏳','✅','❓','📌'];
-    el.innerHTML=emojis.map(e=>`<span onclick="insertEmoji('${e}')">${e}</span>`).join('');
-  }
-  el.classList.toggle('hidden');
-}
-function insertEmoji(e){
-  const input=document.getElementById('chatMsgInput'); if(!input) return;
-  input.value+=e; input.focus();
-}
-function matchFaqAnswer(text){
-  const t=text.toLowerCase();
-  if(/fee|ফি|মূল্য|price|cost|টাকা/.test(t)) return `প্রতিটি সেবার ফি ভিন্ন হতে পারে — "সেবাসমূহ" মেনুতে প্রতিটি সেবার পাশে সঠিক ফি উল্লেখ থাকে।`;
-  if(/track|ট্র্যাক|status|অবস্থা|আবেদন/.test(t)) return currentUser ? computeUserApplicationStatusSummary() : `আবেদনের অবস্থা জানতে "আমার আবেদন" থেকে ট্র্যাক করুন, অথবা লগইন করুন।`;
-  if(/hour|সময়|কখন|office/.test(t)) return `আমাদের অফিস প্রতিদিন সকাল ৯টা থেকে রাত ৯টা পর্যন্ত খোলা থাকে। ফোনঃ ${escapeHtml(db.settings.phone||'')}`;
-  if(/service|সেবা|কি কি/.test(t)) return `আমরা সরকারি সেবা, পাসপোর্ট, ভিসা আবেদন, শিক্ষা ও কম্পিউটার সেবাসহ বিভিন্ন ডিজিটাল সেবা দিয়ে থাকি। বিস্তারিত "সেবাসমূহ" মেনুতে পাবেন।`;
-  return null;
-}
-function computeUserApplicationStatusSummary(){
-  if(!currentUser) return 'আবেদনের অবস্থা জানতে লগইন করুন।';
-  const apps=db.applications.filter(a=>a.userId===currentUser.id).slice(-3).reverse();
-  if(!apps.length) return 'আপনার কোনো আবেদন খুঁজে পাওয়া যায়নি। "আবেদন" মেনু থেকে নতুন আবেদন করতে পারেন।';
-  return 'আপনার সাম্প্রতিক আবেদনঃ '+apps.map(a=>`${a.serviceName} (${statusBn(a.status)})`).join(', ');
-}
-function simulateBotTyping(cb){
-  const el=document.getElementById('aiChatTyping'); if(el) el.classList.remove('hidden');
-  clearTimeout(chatTypingHideTimer);
-  chatTypingHideTimer=setTimeout(()=>{ if(el) el.classList.add('hidden'); cb(); }, 850);
-}
-function renderQuickReplies(){
-  const el=document.getElementById('aiChatQuickReplies'); if(!el) return;
-  el.innerHTML=CHAT_FAQS.map(f=>`<button class="ai-qr-chip" onclick="handleQuickReply('${f.key}')">${f.label}</button>`).join('');
-}
-function handleQuickReply(key){
-  if(key==='human'){
-    if(!currentUser){ closeChatWidget(); pendingGatedTab=null; showAuthPage('🔒 আমাদের টিমের সাথে সরাসরি কথা বলতে অনুগ্রহ করে লগইন বা নিবন্ধন করুন।'); return; }
-    simulateBotTyping(()=>{
-      const convId=currentUser.id+'_admin';
-      if(!db.chats[convId]) db.chats[convId]=[];
-      db.chats[convId].push({from:'bot',text:'ঠিক আছে, আপনাকে আমাদের সাপোর্ট টিমের সাথে সংযুক্ত করা হলো। তারা শীঘ্রই আপনার বার্তার উত্তর দেবে। 🙏',date:new Date().toISOString(),seen:true});
-      saveDB(); renderUserChat();
-    });
-    return;
-  }
-  const input=document.getElementById('chatMsgInput');
-  if(input){ input.value=CHAT_FAQS.find(f=>f.key===key)?.label.replace(/^\S+\s/,'')||''; }
-  if(!currentUser){
-    appendGuestMsg(CHAT_FAQS.find(f=>f.key===key)?.label.replace(/^\S+\s/,'')||key,'user');
-    simulateBotTyping(()=> appendGuestMsg(matchFaqAnswer(key)||faqDirectAnswer(key),'bot'));
-    if(input) input.value='';
-    return;
-  }
-  const convId=currentUser.id+'_admin';
-  if(!db.chats[convId]) db.chats[convId]=[];
-  db.chats[convId].push({from:'user',text:CHAT_FAQS.find(f=>f.key===key)?.label.replace(/^\S+\s/,'')||key,date:new Date().toISOString(),seen:false});
-  saveDB(); renderUserChat(); if(input) input.value='';
-  simulateBotTyping(()=>{
-    db.chats[convId].push({from:'bot',text:faqDirectAnswer(key),date:new Date().toISOString(),seen:true});
-    saveDB(); renderUserChat();
-  });
-}
-function faqDirectAnswer(key){
-  const map={
-    services:`আমরা সরকারি সেবা, পাসপোর্ট, ভিসা আবেদন, শিক্ষা ও কম্পিউটার সেবাসহ বিভিন্ন ডিজিটাল সেবা দিয়ে থাকি। বিস্তারিত "সেবাসমূহ" মেনুতে পাবেন।`,
-    fee:`প্রতিটি সেবার ফি ভিন্ন হতে পারে — "সেবাসমূহ" মেনুতে প্রতিটি সেবার পাশে সঠিক ফি উল্লেখ থাকে।`,
-    status: currentUser ? computeUserApplicationStatusSummary() : `আবেদনের অবস্থা জানতে "আমার আবেদন" থেকে ট্র্যাক করুন, অথবা লগইন করুন।`,
-    hours:`আমাদের অফিস প্রতিদিন সকাল ৯টা থেকে রাত ৯টা পর্যন্ত খোলা থাকে। ফোনঃ ${escapeHtml(db.settings.phone||'')}`
-  };
-  return map[key] || 'দুঃখিত, এই মুহূর্তে সঠিক উত্তর দিতে পারছি না।';
-}
-function appendGuestMsg(text,from){
-  guestChatLog.push({from,text,date:new Date().toISOString()});
-  renderUserChat();
-  if(from==='bot') playChatSound();
-}
-function notifyTypingUser(){
-  if(!currentUser) return;
-  db.typing = db.typing||{};
-  db.typing[currentUser.id+'_admin__user']=Date.now();
-  clearTimeout(userTypingSendTimer);
-  userTypingSendTimer=setTimeout(()=>saveDB(),500);
-}
-function notifyTypingAdmin(){
-  if(!adminChatTarget) return;
-  db.typing = db.typing||{};
-  db.typing[adminChatTarget+'_admin__admin']=Date.now();
-  clearTimeout(adminTypingSendTimer);
-  adminTypingSendTimer=setTimeout(()=>saveDB(),500);
-}
-function markChatSeen(convId, viewerRole){
-  const msgs=db.chats[convId]; if(!msgs||!msgs.length) return;
-  let changed=false;
+// -- shared bubble renderer: escapes text, groups by day, shows sent/seen ticks on own messages --
+function renderChatMessages(msgs, mineFrom, otherReadTs){
+  let html='', lastLabel=null;
   msgs.forEach(m=>{
-    const isOwn = (viewerRole==='user' && m.from==='user') || (viewerRole==='admin' && m.from!=='user');
-    if(!isOwn && !m.seen){ m.seen=true; changed=true; }
+    const label=chatDateLabel(m.date);
+    if(label!==lastLabel){ html+=`<div class="chat-date-divider"><span>${label}</span></div>`; lastLabel=label; }
+    const mine = m.from===mineFrom;
+    const textHtml = escapeHtml(m.text).replace(/\n/g,'<br>');
+    let tick='';
+    if(mine){
+      const seen = otherReadTs && new Date(m.date) <= new Date(otherReadTs);
+      tick = `<span class="msg-tick ${seen?'seen':''}" title="${seen?'পঠিত':'পাঠানো হয়েছে'}">${seen?'✓✓':'✓'}</span>`;
+    }
+    html += `<div class="msg-bubble ${mine?'msg-mine':'msg-theirs'}"><div class="msg-text">${textHtml}</div><div class="msg-time">${timeAgo(m.date)}${tick}</div></div>`;
   });
-  if(changed) saveDB();
+  return html;
 }
-function getUserChatUnread(){
-  if(!currentUser) return 0;
-  const msgs=db.chats[currentUser.id+'_admin']||[];
-  return msgs.filter(m=>m.from!=='user' && !m.seen).length;
-}
-function getAdminChatUnreadTotal(){
-  let n=0;
-  Object.keys(db.chats).forEach(cid=>{ if(cid.endsWith('_admin')) n += (db.chats[cid]||[]).filter(m=>m.from==='user' && !m.seen).length; });
-  return n;
-}
-let lastKnownUserUnread=0;
-function updateChatWidgetBadge(){
-  const badge=document.getElementById('aiChatBadge'); if(!badge) return;
-  const isOpen=document.getElementById('aiChatWidget')?.classList.contains('open');
-  const n = (currentUser && !isOpen) ? getUserChatUnread() : 0;
-  if(n>lastKnownUserUnread) playChatSound();
-  lastKnownUserUnread=n;
-  badge.textContent = n>9?'9+':n;
-  badge.classList.toggle('hidden', n===0);
-}
-function renderUserChat(){
-  const body=document.getElementById('chatBody'); if(!body) return;
-  if(!currentUser){
-    const msgs=guestChatLog;
-    let html = `<div class="ai-msg-row theirs"><div class="ai-msg-bubble">আসসালামু আলাইকুম! আমি BENP সহায়ক 🤖 — সেবা, ফি বা আবেদনের ট্র্যাকিং নিয়ে নিচের অপশন থেকে জিজ্ঞেস করতে পারেন। সরাসরি আমাদের টিমের সাথে কথা বলতে লগইন করুন।</div><div class="ai-msg-meta">এইমাত্র</div></div>`;
-    msgs.forEach(m=>{
-      html += `<div class="ai-msg-row ${m.from==='user'?'mine':'theirs'}"><div class="ai-msg-bubble">${escapeHtml(m.text)}</div><div class="ai-msg-meta">${timeAgo(m.date)}</div></div>`;
-    });
-    body.innerHTML=html; body.scrollTop=body.scrollHeight;
-    return;
+// -- nav badges: total-unread indicator on the "সাপোর্ট"/"চ্যাট" tabs + a gentle toast when a new message lands elsewhere --
+function updateChatNavBadges(){
+  if(!currentUser) return;
+  let count;
+  if(currentUser.role==='admin'){
+    count = db.users.filter(u=>u.role!=='admin').reduce((sum,u)=> sum + unreadCountFor(u.id+'_admin','admin'), 0);
+  } else {
+    count = unreadCountFor(currentUser.id+'_admin','user');
   }
+  ['navChatBadge','bnChatBadge'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.textContent = count>9 ? '9+' : String(count);
+    el.classList.toggle('hidden', count===0);
+  });
+  const activeEl=document.querySelector('.tab-content.active');
+  const activeId=activeEl ? activeEl.id.replace('tab-','') : null;
+  if(count>lastChatUnreadCount && activeId!=='chat' && activeId!=='admin-chat'){
+    toast('নতুন বার্তা এসেছে 💬','info');
+  }
+  lastChatUnreadCount=count;
+}
+
+// ---- user side ----
+function renderUserChat(){
+  if(!currentUser) return;
   const convId=currentUser.id+'_admin';
   if(!db.chats[convId]) db.chats[convId]=[];
   const msgs=db.chats[convId];
+  const body=document.getElementById('chatBody');
+  const otherReadTs=(db.chatReads[convId]||{}).admin;
   if(!msgs.length){
-    body.innerHTML=`<div class="ai-msg-row theirs"><div class="ai-msg-bubble">আসসালামু আলাইকুম, ${escapeHtml(currentUser.name)}! Best & Easy Net Point সাপোর্টে আপনাকে স্বাগতম। কিভাবে সাহায্য করতে পারি? 🤖</div><div class="ai-msg-meta">এইমাত্র</div></div>`;
+    body.innerHTML='<div class="msg-bubble msg-theirs"><div class="msg-text">আস্সালামুআলাইকুম! Best & Easy Net Point সাপোর্টে আপনাকে স্বাগতম। কিভাবে সাহায্য করতে পারি?</div><div class="msg-time">এইমাত্র</div></div>';
+  } else {
+    body.innerHTML=renderChatMessages(msgs,'user',otherReadTs);
     body.scrollTop=body.scrollHeight;
-    return;
   }
-  let lastDate=null, html='';
-  msgs.forEach(m=>{
-    const d=new Date(m.date).toLocaleDateString('bn-BD',{day:'numeric',month:'long'});
-    if(d!==lastDate){ html+=`<div class="ai-date-sep">${d}</div>`; lastDate=d; }
-    const mine = m.from==='user';
-    const botTag = m.from==='bot' ? '<span style="opacity:.6">🤖 </span>' : '';
-    const ticks = mine ? `<span class="${m.seen?'ai-msg-seen':''}">${m.seen?'✓✓':'✓'}</span>` : '';
-    html += `<div class="ai-msg-row ${mine?'mine':'theirs'}"><div class="ai-msg-bubble">${botTag}${escapeHtml(m.text)}</div><div class="ai-msg-meta">${timeAgo(m.date)} ${ticks}</div></div>`;
-  });
-  body.innerHTML=html;
-  body.scrollTop=body.scrollHeight;
-  // reflect a live "সাপোর্ট টিম লিখছে..." hint if admin is actively typing to this user
-  const adminTyping = db.typing && db.typing[convId+'__admin'];
-  const sub=document.getElementById('aiChatSubtitle');
-  if(sub) sub.textContent = (adminTyping && Date.now()-adminTyping<4000) ? 'লিখছে...' : 'অনলাইন আছে · সাধারণত দ্রুত উত্তর দেয়';
+  const last=msgs[msgs.length-1];
+  const prevEl=document.querySelector('#chatSidebarList .chat-user-preview');
+  if(prevEl) prevEl.textContent = last ? (last.from==='user'?'আপনি: ':'')+truncateText(last.text,26) : 'বার্তা পাঠান...';
+  if(unreadCountFor(convId,'user')>0) markChatRead(convId,'user');
+  updateChatNavBadges();
 }
 function sendUserMsg(){
   const input=document.getElementById('chatMsgInput'), text=input.value.trim();
-  if(!text) return;
-  if(!currentUser){
-    appendGuestMsg(text,'user'); input.value='';
-    simulateBotTyping(()=> appendGuestMsg(matchFaqAnswer(text) || 'এই বিষয়ে সঠিক উত্তর দিতে আমাদের টিমের সহায়তা প্রয়োজন। বিস্তারিত সহায়তার জন্য অনুগ্রহ করে লগইন করুন।','bot'));
-    return;
-  }
+  if(!text||!currentUser) return;
   const convId=currentUser.id+'_admin';
   if(!db.chats[convId]) db.chats[convId]=[];
-  db.chats[convId].push({from:'user',text,date:new Date().toISOString(),seen:false});
-  saveDB(); input.value=''; renderUserChat();
-  const auto=matchFaqAnswer(text);
-  if(auto){
-    simulateBotTyping(()=>{
-      db.chats[convId].push({from:'bot',text:auto,date:new Date().toISOString(),seen:true});
-      saveDB(); renderUserChat();
-    });
-  }
+  db.chats[convId].push({from:'user',text,date:new Date().toISOString()});
+  markChatRead(convId,'user');
+  addNotifToUser('admin',`নতুন বার্তা 💬 (${currentUser.name})`,text.slice(0,50)+(text.length>50?'...':''));
+  saveDB(); input.value=''; renderUserChat(); syncToCloud(true);
 }
 
-// ============ ADMIN CHAT CONSOLE ============
-let adminChatSearch='';
-function filterAdminChatUsers(val){ adminChatSearch=(val||'').trim().toLowerCase(); renderAdminChatList(); }
+// ---- admin side ----
 function renderAdminChatList(){
-  let users=db.users.filter(u=>u.role==='user');
-  if(adminChatSearch) users=users.filter(u=>(u.name||'').toLowerCase().includes(adminChatSearch)||(u.phone||'').includes(adminChatSearch));
-  users=users.slice().sort((a,b)=>{
-    const la=(db.chats[a.id+'_admin']||[]).slice(-1)[0], lb=(db.chats[b.id+'_admin']||[]).slice(-1)[0];
-    return new Date(lb?lb.date:0) - new Date(la?la.date:0);
-  });
-  document.getElementById('adminChatList').innerHTML = users.length ? users.map(u=>{
-    const msgs=db.chats[u.id+'_admin']||[];
-    const last=msgs[msgs.length-1];
-    const unread=msgs.filter(m=>m.from==='user'&&!m.seen).length;
-    const preview = last ? (last.text.length>26 ? escapeHtml(last.text.slice(0,26))+'…' : escapeHtml(last.text)) : 'বার্তা নেই';
+  const q=(document.getElementById('adminChatSearch')?.value||'').trim().toLowerCase();
+  let users=db.users.filter(u=>u.role!=='admin');
+  if(q) users=users.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.phone||'').includes(q));
+  const rows=users.map(u=>{
+    const convId=u.id+'_admin', msgs=db.chats[convId]||[];
+    return { u, last: msgs[msgs.length-1], unread: unreadCountFor(convId,'admin') };
+  }).sort((a,b)=> new Date(b.last?b.last.date:0) - new Date(a.last?a.last.date:0));
+  const list=document.getElementById('adminChatList');
+  if(!rows.length){ list.innerHTML=`<div style="padding:16px;font-size:12px;color:var(--gray-400)">${q?'কোনো মিল পাওয়া যায়নি।':'কোনো ব্যবহারকারী নেই।'}</div>`; return; }
+  list.innerHTML=rows.map(({u,last,unread})=>{
+    const preview = last ? (last.from==='admin'?'আপনি: ':'')+truncateText(last.text,25) : 'বার্তা নেই';
+    const badge = unread>0 ? `<div class="chat-unread">${unread>9?'9+':unread}</div>` : '';
     return `<div class="chat-user-item ${adminChatTarget===u.id?'active':''}" onclick="selectAdminChat('${u.id}')">
-      <div class="chat-user-av">${escapeHtml(u.name.charAt(0))}</div>
-      <div style="flex:1;min-width:0"><div class="chat-user-name">${escapeHtml(u.name)}</div><div class="chat-user-preview">${preview}</div></div>
-      ${unread>0?`<div class="chat-unread">${unread>9?'9+':unread}</div>`:(last?`<div style="font-size:9px;color:var(--gray-400)">${timeAgo(last.date)}</div>`:'')}
+      <div class="chat-user-av">${escapeHtml((u.name||'?').charAt(0))}</div>
+      <div><div class="chat-user-name">${escapeHtml(u.name)}</div><div class="chat-user-preview">${escapeHtml(preview)}</div></div>
+      ${badge}
     </div>`;
-  }).join('') : '<div style="padding:16px;font-size:12px;color:var(--gray-400)">কোনো ব্যবহারকারী নেই।</div>';
+  }).join('');
 }
 function selectAdminChat(userId){
   adminChatTarget=userId;
   const u=db.users.find(x=>x.id===userId);
   document.getElementById('adminChatTargetName').textContent=u?u.name:'ব্যবহারকারী';
-  markChatSeen(userId+'_admin','admin');
-  renderAdminChatList(); renderAdminChatBody(); renderAdminCannedReplies();
+  const convId=userId+'_admin';
+  if(unreadCountFor(convId,'admin')>0) markChatRead(convId,'admin');
+  renderAdminChatList(); renderAdminChatBody(); updateChatNavBadges();
+  document.getElementById('adminChatInput')?.focus();
 }
 function renderAdminChatBody(){
-  const body=document.getElementById('adminChatBody'); if(!body) return;
-  if(!adminChatTarget){ body.innerHTML='<div style="text-align:center;padding:30px;color:var(--gray-400);font-size:13px">বামে থেকে ব্যবহারকারী নির্বাচন করুন</div>'; return; }
+  if(!adminChatTarget) return;
   const convId=adminChatTarget+'_admin';
   const msgs=db.chats[convId]||[];
-  if(!msgs.length){ body.innerHTML='<div style="text-align:center;padding:20px;color:var(--gray-400);font-size:13px">কোনো বার্তা নেই।</div>'; return; }
-  let lastDate=null, html='';
-  msgs.forEach(m=>{
-    const d=new Date(m.date).toLocaleDateString('bn-BD',{day:'numeric',month:'long'});
-    if(d!==lastDate){ html+=`<div class="ai-date-sep">${d}</div>`; lastDate=d; }
-    const mine = m.from!=='user';
-    const botTag = m.from==='bot' ? '<span style="opacity:.6;font-size:10px">🤖 স্বয়ংক্রিয় · </span>' : '';
-    const ticks = mine ? `<span class="${m.seen?'ai-msg-seen':''}">${m.seen?'✓✓':'✓'}</span>` : '';
-    html += `<div class="msg-bubble ${mine?'msg-mine':'msg-theirs'}"><div>${botTag}${escapeHtml(m.text)}</div><div class="msg-time">${timeAgo(m.date)} ${ticks}</div></div>`;
-  });
-  const userTyping = db.typing && db.typing[convId+'__user'];
-  if(userTyping && Date.now()-userTyping<4000){
-    html += `<div class="ai-chat-typing" style="padding:2px 6px"><span></span><span></span><span></span> ব্যবহারকারী লিখছে...</div>`;
-  }
-  body.innerHTML=html;
+  const body=document.getElementById('adminChatBody');
+  const otherReadTs=(db.chatReads[convId]||{}).user;
+  body.innerHTML = msgs.length ? renderChatMessages(msgs,'admin',otherReadTs) : '<div style="text-align:center;padding:20px;color:var(--gray-400);font-size:13px">কোনো বার্তা নেই। প্রথম বার্তাটি পাঠান।</div>';
   body.scrollTop=body.scrollHeight;
 }
-const ADMIN_CANNED_REPLIES=['ধন্যবাদ, শীঘ্রই যোগাযোগ করছি।','আপনার আবেদনটি প্রক্রিয়াধীন আছে।','অনুগ্রহ করে আপনার ট্র্যাকিং নম্বরটি দিন।','প্রয়োজনীয় কাগজপত্র সংযুক্ত করুন।','আপনার সমস্যাটি সমাধান হয়েছে কি?'];
-function renderAdminCannedReplies(){
-  const el=document.getElementById('adminChatCanned'); if(!el) return;
-  el.innerHTML=ADMIN_CANNED_REPLIES.map(r=>`<button class="ai-qr-chip" onclick="useCannedReply('${r.replace(/'/g,"\\'")}')">${r}</button>`).join('');
-}
-function useCannedReply(text){
-  const input=document.getElementById('adminChatInput'); if(input){ input.value=text; input.focus(); }
-}
 function sendAdminMsg(){
-  const inputEl=document.getElementById('adminChatInput');
-  const text=inputEl.value.trim();
+  const input=document.getElementById('adminChatInput'), text=input.value.trim();
   if(!text||!adminChatTarget) return;
   const convId=adminChatTarget+'_admin';
   if(!db.chats[convId]) db.chats[convId]=[];
-  db.chats[convId].push({from:'admin',text,date:new Date().toISOString(),seen:false});
-  addNotifToUser(adminChatTarget,'নতুন বার্তা 💬',text.slice(0,50)+(text.length>50?'…':''));
-  saveDB(); inputEl.value=''; renderAdminChatBody(); renderAdminChatList();
+  db.chats[convId].push({from:'admin',text,date:new Date().toISOString()});
+  markChatRead(convId,'admin');
+  addNotifToUser(adminChatTarget,'নতুন বার্তা 💬',text.slice(0,50)+(text.length>50?'...':''));
+  saveDB(); input.value=''; renderAdminChatBody(); renderAdminChatList(); updateChatNavBadges(); syncToCloud(true);
 }
 
 // ============ ADMIN DASHBOARD ============
@@ -3271,6 +3061,7 @@ function sendContactMsg(){
   if(!name||!msg){toast('নাম ও বার্তা আবশ্যক।','warning');return;}
   db.contactMsgs=db.contactMsgs||[];
   db.contactMsgs.push({id:'cm'+Date.now(),name,phone:document.getElementById('contactPhone').value.trim(),subject:document.getElementById('contactSubject').value.trim(),msg,date:new Date().toISOString()});
+  addNotifToUser('admin','নতুন যোগাযোগ বার্তা ✉️',`${name} — ${msg.slice(0,50)}${msg.length>50?'...':''}`);
   saveDB();
   ['contactName','contactPhone','contactSubject','contactMsg'].forEach(id=>document.getElementById(id).value='');
   toast('বার্তা পাঠানো হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।','success');
@@ -3482,6 +3273,11 @@ function toast(msg,type='info'){
 }
 
 // ============ UTILITY ============
+function escapeHtml(str){
+  const div=document.createElement('div');
+  div.textContent = str==null ? '' : String(str);
+  return div.innerHTML;
+}
 function statusBn(s){return{pending:'⏳ অপেক্ষমান',processing:'🔄 প্রক্রিয়াধীন',approved:'✅ অনুমোদিত',rejected:'❌ প্রত্যাখ্যাত'}[s]||s;}
 function noticeIcon(t){return{info:'ℹ️',warning:'⚠️',success:'✅',danger:'🚨'}[t]||'📢';}
 function togglePass(id,el){const inp=document.getElementById(id);if(inp.type==='password'){inp.type='text';el.textContent='🙈';}else{inp.type='password';el.textContent='👁️';}}
@@ -3526,10 +3322,11 @@ function buildBottomNav(){
   const items = isAdmin
     ? [{id:'admin-dashboard',icon:'⚡',label:'ড্যাশবোর্ড'},{id:'admin-apps',icon:'📋',label:'আবেদন'},{id:'admin-services',icon:'⚙️',label:'সেবা',cta:true},{id:'admin-notices',icon:'📢',label:'নোটিশ'},{id:'admin-settings',icon:'🔧',label:'সেটিংস'}]
     : [{id:'home',icon:'🏠',label:'হোম'},{id:'services',icon:'📋',label:'সেবা'},{id:'apply',icon:'✍️',label:'আবেদন',cta:true},{id:'myapps',icon:'📁',label:'আমার'},{id:'profile',icon:'👤',label:currentUser?'প্রোফাইল':'লগইন'}];
-  el.innerHTML = items.map(t=>t.cta
-    ? `<div class="bn-item bn-cta" id="bn-${t.id}" onclick="goTab('${t.id}')"><div class="bn-icon-wrap">${t.icon}</div>${t.label}</div>`
-    : `<div class="bn-item" id="bn-${t.id}" onclick="goTab('${t.id}')"><span class="bn-icon">${t.icon}</span>${t.label}</div>`
-  ).join('');
+  el.innerHTML = items.map(t=>{
+    if(t.cta) return `<div class="bn-item bn-cta" id="bn-${t.id}" onclick="goTab('${t.id}')"><div class="bn-icon-wrap">${t.icon}</div>${t.label}</div>`;
+    const chatBadge = (t.id==='chat'||t.id==='admin-chat') ? '<span class="bn-chat-badge hidden" id="bnChatBadge">0</span>' : '';
+    return `<div class="bn-item" id="bn-${t.id}" onclick="goTab('${t.id}')">${chatBadge}<span class="bn-icon">${t.icon}</span>${t.label}</div>`;
+  }).join('');
 }
 function syncBottomNav(tabId){
   document.querySelectorAll('.bn-item').forEach(el=>el.classList.remove('active'));
@@ -3577,7 +3374,6 @@ function renderAdminChart(){
   restoreSession();
   applySiteCustomization();
   renderAuthPublicServices(); updateContactFabs();
-  const soundBtn=document.getElementById('aiChatSoundBtn'); if(soundBtn) soundBtn.textContent=chatSoundOn?'🔔':'🔕';
   const utilDateEl=document.getElementById('utilDate');
   if(utilDateEl) utilDateEl.textContent=new Date().toLocaleDateString('bn-BD',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
   const bar=document.getElementById('loadBar');
@@ -3591,8 +3387,7 @@ function renderAdminChart(){
     setTimeout(()=>{
       document.getElementById('loadingScreen').style.display='none';
       document.getElementById('appShell').classList.add('show');
-      buildNav(); buildBottomNav(); updateHeaderUser();
-      renderQuickReplies(); updateChatWidgetBadge();
+      buildNav(); buildBottomNav(); updateHeaderUser(); updateChatNavBadges();
       goTab(currentUser ? (currentUser.role==='admin' ? 'admin-dashboard' : 'home') : 'home');
       setCloudStatus(cloudAvailable);
       startCloudPolling();
