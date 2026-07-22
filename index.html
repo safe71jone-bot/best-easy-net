@@ -2054,7 +2054,7 @@ async function loadDB() {
       const json = await res.json();
       const remote = json && json.record;
       if (remote && typeof remote === 'object' && Object.keys(remote).length) {
-        db = {...db, ...remote};
+        mergeCloudDB(remote);
         db.settings = {...getDefSettings(), ...db.settings};
       } else {
         // bin empty -> seed it with current local/default data
@@ -2307,7 +2307,6 @@ function doRegister() {
   db.users.push(user);
   if(!db.notifications[user.id])db.notifications[user.id]=[];
   db.notifications[user.id].push({id:'n'+Date.now(),title:'স্বাগতম! 🎉',body:`${name}, আপনার অ্যাকাউন্ট তৈরি হয়েছে।`,read:false,date:new Date().toISOString()});
-  addNotifToUser('admin','নতুন সদস্য নিবন্ধন 👤',`${name} (${phone}) নতুন অ্যাকাউন্ট তৈরি করেছেন।`);
   saveDB();
   showAuthMsg(msg,'✅ নিবন্ধন সফল! এখন লগইন করুন।','success');
   setTimeout(()=>switchAuthTab('login'),1800);
@@ -2723,7 +2722,6 @@ function submitApplication() {
   const app={id:'app'+Date.now(),tracking:trackId,userId:currentUser?.id||'guest',userName:applyData.name,phone:applyData.phone,nid:applyData.nid||'',dob:applyData.dob||'',father:applyData.father||'',mother:applyData.mother||'',address:applyData.address||'',note:applyData.note||'',serviceId:s.id,serviceName:s.name,serviceIcon:s.icon,fee:s.fee,payMethod:applyData.payMethod,txn:applyData.txn||'',paymentStatus:applyData.payMethod==='cash'?'unpaid':(applyData.txn?'pending_verify':'unpaid'),status:'pending',date:new Date().toISOString(),timeline:[{status:'pending',label:'আবেদন জমা হয়েছে',date:new Date().toISOString()}],adminNote:''};
   db.applications.push(app);
   if(currentUser) addNotifToUser(currentUser.id,'আবেদন জমা হয়েছে ✅',`"${s.name}" সেবার আবেদন জমা হয়েছে। ট্র্যাকিং: ${trackId}`);
-  addNotifToUser('admin','নতুন আবেদন এসেছে 📋',`${applyData.name} — "${s.name}" সেবার জন্য আবেদন করেছেন। ট্র্যাকিং: ${trackId}`);
   saveDB();
   document.querySelectorAll('.step-content').forEach(el=>el.classList.remove('active'));
   document.getElementById('tab-apply').querySelector('.card').innerHTML=`<div class="tracking-result print-area"><div style="font-size:2.5rem;margin-bottom:10px">🎉</div><div style="font-size:1.2rem;font-weight:900;margin-bottom:6px">আবেদন সফলভাবে জমা হয়েছে!</div><div style="opacity:0.7;font-size:13px">আপনার ট্র্যাকিং নম্বর</div><div class="tracking-code">${trackId}</div><div style="opacity:0.65;font-size:12.5px;margin-bottom:6px">এই নম্বর সংরক্ষণ করুন। এটি দিয়ে আবেদনের অবস্থা জানতে পারবেন।</div><div class="tr-actions"><button onclick="copyTrackId('${trackId}')">📋 কপি করুন</button><button onclick="printReceipt()">🖨️ প্রিন্ট রসিদ</button></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="btn btn-gold" onclick="goTab('myapps')">আমার আবেদন দেখুন →</button><button class="btn btn-ghost" style="border-color:rgba(255,255,255,0.3);color:#fff" onclick="goTab('home')">হোমে ফিরুন</button></div></div>`;
@@ -3061,7 +3059,6 @@ function sendContactMsg(){
   if(!name||!msg){toast('নাম ও বার্তা আবশ্যক।','warning');return;}
   db.contactMsgs=db.contactMsgs||[];
   db.contactMsgs.push({id:'cm'+Date.now(),name,phone:document.getElementById('contactPhone').value.trim(),subject:document.getElementById('contactSubject').value.trim(),msg,date:new Date().toISOString()});
-  addNotifToUser('admin','নতুন যোগাযোগ বার্তা ✉️',`${name} — ${msg.slice(0,50)}${msg.length>50?'...':''}`);
   saveDB();
   ['contactName','contactPhone','contactSubject','contactMsg'].forEach(id=>document.getElementById(id).value='');
   toast('বার্তা পাঠানো হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।','success');
